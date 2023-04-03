@@ -373,6 +373,96 @@ WFAlignerGapAffine2Pieces::WFAlignerGapAffine2Pieces(
   attributes.affine2p_penalties.gap_extension2 = gapExtension2;
   wfAligner = wavefront_aligner_new(&attributes);
 }
+/*
+ * Choose the minimum penalty model which fits the penalties given
+ */
+WFAlignerChoose::WFAlignerChoose(
+  const int mismatch,
+  const int gapOpening1,
+  const int gapExtension1,
+  const int gapOpening2,
+  const int gapExtension2,
+  const AlignmentScope alignmentScope,
+  const MemoryModel memoryModel) :
+WFAligner(alignmentScope,memoryModel) {
+  if ((gapOpening2 != 0 || gapExtension2 != 0) &&
+      (gapOpening2 != gapOpening1 || gapExtension2 != gapExtension1)) {
+    std::cout << "using gap_affine_2p model" << std::endl;
+    attributes.distance_metric = gap_affine_2p;
+    attributes.affine2p_penalties.match = 0;
+    attributes.affine2p_penalties.mismatch = mismatch;
+    attributes.affine2p_penalties.gap_opening1 = gapOpening1;
+    attributes.affine2p_penalties.gap_extension1 = gapExtension1;
+    attributes.affine2p_penalties.gap_opening2 = gapOpening2;
+    attributes.affine2p_penalties.gap_extension2 = gapExtension1;
+  } else if (gapOpening1 != 0) {
+    std::cout << "using gap_affine model" << std::endl;
+    attributes.distance_metric = gap_affine;
+    attributes.affine_penalties.match = 0;
+    attributes.affine_penalties.mismatch = mismatch;
+    attributes.affine_penalties.gap_opening = gapOpening1;
+    attributes.affine_penalties.gap_extension = gapExtension1;
+  } else if (gapExtension1 == mismatch) {
+    std::cout << "using edit model" << std::endl;
+    // if indel and mismatch have the same score, then this is edit distance
+    attributes.distance_metric = edit;
+  } else if (mismatch == 0) {
+    //if the only penalty is gap extension, then this is LCS
+    std::cout << "using indel model" << std::endl;
+    attributes.distance_metric = indel;
+  } else {
+    std::cout << "using gap_linear model" << std::endl;
+    attributes.distance_metric = gap_linear;
+    attributes.linear_penalties.match = 0;
+    attributes.linear_penalties.mismatch = mismatch;
+    attributes.linear_penalties.indel = gapExtension1;
+  }
+  wfAligner = wavefront_aligner_new(&attributes);
+}
+WFAlignerChoose::WFAlignerChoose(
+  const int match,
+  const int mismatch,
+  const int gapOpening1,
+  const int gapExtension1,
+  const int gapOpening2,
+  const int gapExtension2,
+  const AlignmentScope alignmentScope,
+  const MemoryModel memoryModel) :
+WFAligner(alignmentScope,memoryModel) {
+  if ((gapOpening2 != 0 || gapExtension2 != 0) &&
+      (gapOpening2 != gapOpening1 || gapExtension2 != gapExtension1)) {
+    // most general case is gap_affine_2p
+    std::cout << "using gap_affine_2p model" << std::endl;
+    attributes.distance_metric = gap_affine_2p;
+    attributes.affine2p_penalties.match = match;
+    attributes.affine2p_penalties.mismatch = mismatch;
+    attributes.affine2p_penalties.gap_opening1 = gapOpening1;
+    attributes.affine2p_penalties.gap_extension1 = gapExtension1;
+    attributes.affine2p_penalties.gap_opening2 = gapOpening2;
+    attributes.affine2p_penalties.gap_extension2 = gapExtension1;
+  } else if (gapOpening1 != 0) {
+    // equivalent to gap_affine
+    std::cout << "using gap_affine model" << std::endl;
+    attributes.distance_metric = gap_affine;
+    attributes.affine_penalties.match = match;
+    attributes.affine_penalties.mismatch = mismatch;
+    attributes.affine_penalties.gap_opening = gapOpening1;
+    attributes.affine_penalties.gap_extension = gapExtension1;
+  } else if (match == 0 && gapExtension1 == mismatch) {
+    std::cout << "using edit model" << std::endl;
+    attributes.distance_metric = edit;
+  } else if (match == 0 && mismatch == 0) {
+    std::cout << "using indel model" << std::endl;
+    attributes.distance_metric = indel;
+  } else {
+    std::cout << "using gap_linear model" << std::endl;
+    attributes.distance_metric = gap_linear;
+    attributes.linear_penalties.match = match;
+    attributes.linear_penalties.mismatch = mismatch;
+    attributes.linear_penalties.indel = gapExtension1;
+  }
+  wfAligner = wavefront_aligner_new(&attributes);
+}
 
 } /* namespace wfa */
 

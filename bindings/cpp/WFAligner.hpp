@@ -33,6 +33,7 @@
 #define BINDINGS_CPP_WFALIGNER_HPP_
 
 #include <string>
+#include <iostream>
 
 #include "../../wavefront/wfa.hpp"
 
@@ -238,6 +239,29 @@ public:
       const int gapExtension2,
       const AlignmentScope alignmentScope,
       const MemoryModel memoryModel = MemoryHigh);
+};
+/*
+ * Choose the best Aligner (a.k.a. concave 2-pieces)
+ */
+class WFAlignerChoose : public WFAligner {
+public:
+  WFAlignerChoose(
+    const int mismatch,
+    const int gapOpening1,
+    const int gapExtension1,
+    const int gapOpening2,
+    const int gapExtension2,
+    const AlignmentScope alignmentScope,
+    const MemoryModel memoryModel = MemoryHigh);
+  WFAlignerChoose(
+    const int match,
+    const int mismatch,
+    const int gapOpening1,
+    const int gapExtension1,
+    const int gapOpening2,
+    const int gapExtension2,
+    const AlignmentScope alignmentScope,
+    const MemoryModel memoryModel = MemoryHigh);
 };
 
 } /* namespace wfa */
