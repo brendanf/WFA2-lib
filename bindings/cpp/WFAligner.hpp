@@ -244,6 +244,20 @@ public:
  * Choose the best Aligner (a.k.a. concave 2-pieces)
  */
 class WFAlignerChoose : public WFAligner {
+private:
+  const distance_metric_t distance_metric;
+  static distance_metric_t decide_distance_metric(
+      int match, int mismatch,
+      int gap_opening1, int gap_extension1,
+      int gap_opening2, int gap_extension2
+  );
+  static void configure_attributes(
+      wavefront_aligner_attr_t &attributes,
+      distance_metric_t distance_metric,
+      int match, int mismatch,
+      int gap_opening1, int gap_extension1,
+      int gap_opening2, int gap_extension2
+  );
 public:
   WFAlignerChoose(
     const int mismatch,
@@ -262,6 +276,7 @@ public:
     const int gapExtension2,
     const AlignmentScope alignmentScope,
     const MemoryModel memoryModel = MemoryHigh);
+  distance_metric_t get_distance_metric();
 };
 
 } /* namespace wfa */
