@@ -47,15 +47,15 @@
   ((offset) >> BACKTRACE_TYPE_BITS)
 
 typedef enum {
-  backtrace_M       = 9,
-  backtrace_D2_ext  = 8,
-  backtrace_D2_open = 7,
-  backtrace_D1_ext  = 6,
-  backtrace_D1_open = 5,
-  backtrace_I2_ext  = 4,
-  backtrace_I2_open = 3,
-  backtrace_I1_ext  = 2,
-  backtrace_I1_open = 1,
+  backtrace_M       = 1,
+  backtrace_D2_ext  = 9,
+  backtrace_D2_open = 8,
+  backtrace_D1_ext  = 7,
+  backtrace_D1_open = 6,
+  backtrace_I2_ext  = 5,
+  backtrace_I2_open = 4,
+  backtrace_I1_ext  = 3,
+  backtrace_I1_open = 2,
 } backtrace_type;
 
 /*
