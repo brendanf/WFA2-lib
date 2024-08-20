@@ -34,6 +34,7 @@
 
 #include <string>
 #include <iostream>
+#include <cstdint>
 
 #include "../../wavefront/wfa.hpp"
 
