@@ -84,7 +84,7 @@
 #define COMA ','
 #define SEMICOLON ';'
 #define COLON ':'
-#define HASH '#'
+//#define HASH '#'
 #define UNDERSCORE '_'
 
 /*
