@@ -42,3 +42,4 @@ tests/wfa.utest.log.mem
 tests/wfa.utest.log.time
 tests/*.alg
 
+.vscode
