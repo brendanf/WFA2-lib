@@ -549,7 +549,7 @@ void WFAlignerChoose::configure_attributes(
     attributes.affine2p_penalties.gap_opening1 = gapOpening1;
     attributes.affine2p_penalties.gap_extension1 = gapExtension1;
     attributes.affine2p_penalties.gap_opening2 = gapOpening2;
-    attributes.affine2p_penalties.gap_extension2 = gapExtension1;
+    attributes.affine2p_penalties.gap_extension2 = gapExtension2;
     break;
   case gap_affine:
     attributes.affine_penalties.match = match;
