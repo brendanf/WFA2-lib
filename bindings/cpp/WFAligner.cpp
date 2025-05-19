@@ -185,8 +185,8 @@ WFAligner::AlignmentStatus WFAligner::alignExtension(
       wfAligner,pattern,patternLength,text,textLength);
 }
 WFAligner::AlignmentStatus WFAligner::alignExtension(
-    std::string& pattern,
-    std::string& text) {
+    const std::string& pattern,
+    const std::string& text) {
   // Delegate
   return alignExtension(pattern.c_str(),pattern.length(),text.c_str(),text.length());
 }

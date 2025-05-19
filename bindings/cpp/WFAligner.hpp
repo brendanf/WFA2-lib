@@ -127,8 +127,8 @@ public:
       const char* const text,
       const int textLength);
   AlignmentStatus alignExtension( // String ASCII Sequences
-      std::string& pattern,
-      std::string& text);
+      const std::string& pattern,
+      const std::string& text);
   AlignmentStatus alignExtension( // 2bits-Packed Sequences
       const uint8_t* const pattern,
       const int patternLength,
