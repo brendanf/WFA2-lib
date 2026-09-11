@@ -121,8 +121,9 @@ int pcigar_unpack_extend(
     text_block = *text_blocks;
     cmp = pattern_block ^ text_block;
   }
-  // Count equal characters
-  num_matches += __builtin_ctzl(cmp)/8;
+  // Count equal characters. cmp is uint64_t; ctzl uses unsigned long,
+  // which is 32-bit on Windows (LLP64) and would truncate the high half.
+  num_matches += __builtin_ctzll(cmp)/8;
   *((uint64_t*)cigar_buffer) = CIGAR_8MATCHES_UINT64;
   // Return total matches
   return num_matches;

@@ -59,8 +59,9 @@ FORCE_INLINE wf_offset_t wavefront_extend_matches_packed_kernel(
     // Compare
     cmp = *pattern_blocks ^ *text_blocks;
   }
-  // Count equal characters
-  const int equal_right_bits = __builtin_ctzl(cmp);
+  // Count equal characters. cmp is uint64_t; ctzl uses unsigned long,
+  // which is 32-bit on Windows (LLP64) and would truncate the high half.
+  const int equal_right_bits = __builtin_ctzll(cmp);
   const int equal_chars = DIV_FLOOR(equal_right_bits,8);
   offset += equal_chars;
   // Return extended offset
