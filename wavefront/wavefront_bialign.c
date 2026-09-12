@@ -672,8 +672,8 @@ int wavefront_bialign_compute_score(
   // Find breakpoint in the alignment
   wf_bialign_breakpoint_t breakpoint;
   const int align_status = wavefront_bialign_find_breakpoint(wf_aligner->bialigner,
-      wf_aligner->penalties.distance_metric,&wf_aligner->alignment_form,
-      affine_matrix_M,affine_matrix_M,&breakpoint,0);
+                                                             wf_aligner->penalties.distance_metric, &wf_aligner->alignment_form,
+                                                             affine2p_matrix_M, affine2p_matrix_M, &breakpoint, 0);
   // DEBUG
   if (wf_aligner->system.verbose >= 2) {
     wavefront_debug_end(wf_forward);
@@ -715,9 +715,9 @@ void wavefront_bialign(
     // Bidirectional alignment
     const bool min_length = MAX(pattern_length,text_length) <= WF_BIALIGN_FALLBACK_MIN_LENGTH;
     align_status = wavefront_bialign_alignment(wf_aligner,
-        &wf_aligner->alignment_form,
-        affine_matrix_M,affine_matrix_M,
-        min_length ? 0 : INT_MAX,0);
+                                               &wf_aligner->alignment_form,
+                                               affine2p_matrix_M, affine2p_matrix_M,
+                                               min_length ? 0 : INT_MAX, 0);
   }
   // Check status
   if (align_status == WF_STATUS_OK) {
