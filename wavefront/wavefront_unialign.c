@@ -312,7 +312,7 @@ void wavefront_unialign_print_status(
   wavefront_aligner_print_mode(stream,wf_aligner);
   fprintf(stream,
       "] SequenceLength=(%d,%d) Score %d (~ %2.3f%% aligned). "
-      "MemoryUsed(WF-Slab,BT-buffer)=(%lu MB,%lu MB). "
+      "MemoryUsed(WF-Slab,BT-buffer)=(%" PRIu64 " MB,%" PRIu64 " MB). "
       "Wavefronts ~ %2.3f Moffsets\n",
       pattern_length,
       text_length,

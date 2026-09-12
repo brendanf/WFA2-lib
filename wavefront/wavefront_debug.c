@@ -167,7 +167,7 @@ void wavefront_report_lite(
   }
   // MEMORY (#6)
   if (alignment_completed) {
-    fprintf(stream,"\t%luMB\t",CONVERT_B_TO_MB(memory_used));
+    fprintf(stream,"\t%" PRIu64 "MB\t",CONVERT_B_TO_MB(memory_used));
   } else {
     fprintf(stream,"\t-\t");
   }
